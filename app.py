@@ -4,31 +4,16 @@ from flask_cors import CORS, cross_origin
 import json
 import io
 from PIL import Image
-import cv2
 import base64
 import numpy as np
-
-import os
-import string
-import random
-import argparse
 import numpy as np
-from PIL import ImageFilter, Image
-from pickle import dump, load
-from datetime import date, datetime
-import matplotlib.pyplot as plt
-
-from tensorflow.keras.models import Model, load_model
-from tensorflow.keras.preprocessing.text import Tokenizer
+from PIL import Image
+from pickle import load
+from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-from tensorflow.keras.preprocessing.image import load_img, img_to_array
-from tensorflow.keras.applications.xception import Xception, preprocess_input
+from tensorflow.keras.applications.xception import Xception
 
 
-# ap = argparse.ArgumentParser()
-# ap.add_argument('-i', '--image', required=True, help="Image Path")
-# args = vars(ap.parse_args())
-# img_path = args['image']
 
 def extract_features(image, model):
     image = image.resize((299,299))
@@ -87,9 +72,6 @@ def gen_desc():
     description = generate_desc(model, tokenizer, photo, max_length)
     desc = ' '.join(description.split()[1:-1])
     print(desc)
-    # plt.imshow(image)
-    # image.save('my.png')
-    # return json.dumps("Hello World!")
     return json.dumps(desc)
 
 if __name__ == '__main__':
